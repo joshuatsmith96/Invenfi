@@ -1,10 +1,21 @@
-const BackgroundBlobs = () => {
-    return(
-        <>
-        <div className="absolute bottom-[-200px] left-[-200px] w-200 h-200 bg-[#CCDEFF] rounded-full circle-move-1"></div>
-        <div className="absolute top-[-200px] right-[-200px] w-100 h-100 bg-[#CCDEFF] rounded-full circle-move-2"></div>
-        </>
-    )
-}
+import Blob from "./Blob";
+import { Blob1, Blob2 } from "./Login/BlobSpecs";
 
-export default BackgroundBlobs
+const BackgroundBlobs = () => {
+  return (
+    <>
+      <Blob
+        location={Blob1.Location}
+        dimension={Blob1.Dimension}
+        circleClass="circle-move-1"
+      ></Blob>
+      <Blob
+        location={Blob2.Location}
+        dimension={Blob2.Dimension}
+        circleClass="circle-move-1"
+      ></Blob>
+    </>
+  );
+};
+
+export default BackgroundBlobs;

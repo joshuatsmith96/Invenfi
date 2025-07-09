@@ -12,7 +12,7 @@ const LoginInput = ({label, type, placeholder}: LoginInputType) => {
   return (
     <div className='mb-5'>
       <p className="mb-2 font-medium">{label}</p>
-      <div className="border flex flex-row items-center p-3 w-[400px] border-[#d9d9d9] rounded-lg">
+      <div className="border flex flex-row items-center p-3 w-[100%] border-[#d9d9d9] rounded-lg">
         <FontAwesomeIcon icon={type==="password" ? faLock : faUser} />
         {type === "text" ? <input type="text" className="outline-none pl-2 w-full" placeholder={placeholder} /> : <input type="password" className="outline-none pl-2 w-full" placeholder="Enter your username" />}
       </div>
