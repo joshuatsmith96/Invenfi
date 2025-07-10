@@ -1,0 +1,6 @@
+What I need to do for Blobs:
+
+1. Create a function that detects when screen size changes
+2. The screen size will determine which dimension style to go with (desktop, tablet, or phone)
+3. Create dynamic style objects for each dimension size. Input the dimension size from the desktop, tablet, or phone inputted parameter prop.
+4. Use the style that corresponds to the current screen size

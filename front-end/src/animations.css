@@ -1,3 +1,7 @@
+.blob{
+  transition: .5s;
+}
+
 .circle-move-1{
     animation: float 8s ease-in-out infinite, breathe 6s ease-in-out infinite, blob-move 20s ease-in-out infinite;
 }
