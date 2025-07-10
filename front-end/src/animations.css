@@ -10,6 +10,25 @@
     animation: float 6s ease-in-out infinite, breathe 4s ease-in-out infinite, blob-move 10s ease-in-out infinite;
 }
 
+.swipe-out-left {
+  animation: swipeLeft 0.5s forwards;
+}
+
+.swipe-in-right {
+  animation: swipeInFromRight 0.5s ease-out forwards;
+}
+
+@keyframes swipeInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 @keyframes float {
     0%   { transform: translate(0px, 0px); }
     20%  { transform: translate(6px, -4px); }
@@ -23,6 +42,13 @@
     0%, 100%   { transform: scale(1); }
     50%        { transform: scale(1.03); }
   }
+
+  @keyframes swipeLeft {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
 
   @keyframes blob-move {
     0% {
