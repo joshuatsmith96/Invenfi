@@ -68,7 +68,7 @@ const Blob = ({ styles, movement }: BlobSettings) => {
 
   return (
     <div
-      className={`blob absolute bg-[#CCDEFF] rounded-full circle-move-${movement}`}
+      className={`blob absolute bg-[#CCDEFF] rounded-full circle-move-${movement} shadow-md shadow-[#CCDEFF]`}
       style={activeStyle}
     ></div>
   );
