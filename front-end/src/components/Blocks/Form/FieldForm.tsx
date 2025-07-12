@@ -1,4 +1,5 @@
 import Field from "./Field";
+import { styleField } from "../../../utils/StyleUtil";
 
 export type InputField = {
   id: string;
@@ -8,30 +9,49 @@ export type InputField = {
   required: boolean;
 }[];
 
-type InputParamsType = {
-  inputParams: InputField;
+type FieldValue = {
+  input: HTMLInputElement;
+  valid: boolean;
+  value: string;
 };
 
-const FieldForm = ({ inputParams }: InputParamsType) => {
+export type ValuesMap = {
+  [key: string]: FieldValue;
+};
 
-  const validate = (input: HTMLInputElement, value: string, required: boolean) => {
+type InputParamsType = {
+  inputParams: InputField;
+  sendInfo: (data: ValuesMap) => void;
+};
+
+const FieldForm = ({ inputParams, sendInfo }: InputParamsType) => {
+  const values: ValuesMap = {};
+
+  const validate = (input: HTMLInputElement, value: string, required: boolean, id: string) => {
     //If value length is 0, send a message to the field that it is not valid.
-    const inputContainer = input.parentNode as HTMLElement
-    console.log(inputContainer)
+    const inputContainer = input.parentNode as HTMLElement;
     //NEXT STEP IS TO ADD CLASSLIST STYLES
     if (value.length === 0 && required) {
-      console.log("Not Valid. Give Red Border And Shake");
-      inputContainer.classList.add("border-red-500", "shake")
+      //Not Valid
+      values[id] = { input: input, valid: false, value: value };
+      styleField(inputContainer, false);
     } else {
-      inputContainer.classList.remove("border-red-500", "shake")
-      console.log("Valid");
+      //Valid
+      values[id] = { input: input, valid: true, value: value };
+      styleField(inputContainer, true);
     }
+
+    sendInfo(values);
   };
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>, required: boolean) => {
-    const element = e.target
+  const onChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    required: boolean,
+    id: string
+  ) => {
+    const element = e.target;
     const value = e.target.value;
-    validate(element, value, required)
+    validate(element, value, required, id);
   };
 
   return (
@@ -44,7 +64,7 @@ const FieldForm = ({ inputParams }: InputParamsType) => {
           type={field.type}
           placeholder={field.placeholder}
           onChange={(e) => {
-            onChangeHandler(e, field.required);
+            onChangeHandler(e, field.required, field.id);
           }}
           required={field.required}
         />
