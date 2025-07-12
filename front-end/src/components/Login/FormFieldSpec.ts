@@ -6,11 +6,13 @@ export const FormFieldSpec: InputField = [
       label: "Username",
       type: "text",
       placeholder: "Enter your username",
+      required: true
     },
     {
       id: "login-password",
       label: "Password",
       type: "password",
       placeholder: "Enter your password",
+      required: true
     }
 ]
