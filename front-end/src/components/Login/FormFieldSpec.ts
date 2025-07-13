@@ -1,5 +1,5 @@
 import type { InputField } from "../Blocks/Form/FieldForm"
-import { faGamepad } from "@fortawesome/free-solid-svg-icons"
+import { faBookAtlas } from "@fortawesome/free-solid-svg-icons"
 
 export const FormFieldSpec: InputField = [
     {
@@ -20,7 +20,7 @@ export const FormFieldSpec: InputField = [
       id: "test-1",
       label: "Secret Hint",
       type: 'custom',
-      customIcon: faGamepad,
+      customIcon: faBookAtlas,
       placeholder: "Enter a secret hint",
       required: false
     }
