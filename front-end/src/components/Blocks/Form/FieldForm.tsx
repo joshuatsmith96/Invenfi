@@ -22,12 +22,13 @@ export type ValuesMap = {
 };
 
 type InputParamsType = {
+  formSize: number,
   inputParams: InputField;
   sendInfo: (data: ValuesMap) => void;
   containerRef?: React.Ref<HTMLDivElement>; // new optional prop
 };
 
-const FieldForm = ({ inputParams, sendInfo, containerRef }: InputParamsType) => {
+const FieldForm = ({ formSize, inputParams, sendInfo, containerRef }: InputParamsType) => {
   const values: ValuesMap = {};
 
   const validate = (
@@ -60,7 +61,7 @@ const FieldForm = ({ inputParams, sendInfo, containerRef }: InputParamsType) => 
   };
 
   return (
-    <div ref={containerRef} className="w-full"> {/* attach the ref here */}
+    <div ref={containerRef} className={`w-full ${formSize === 2 ? 'grid grid-cols-2 gap-4 max-md:grid-cols-1' : ''}`}> {/* attach the ref here */}
       {inputParams.map((field) => (
         <Field
           key={field.id}
