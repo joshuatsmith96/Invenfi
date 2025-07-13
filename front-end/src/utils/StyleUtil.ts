@@ -1,7 +1,7 @@
-export const styleField = (field: HTMLElement, valid: boolean) => {
+export const styleField = (field: Element | undefined, valid: boolean) => {
   if(valid){
-    field.classList.remove("border-red-500", "shake");
+    field?.classList.remove("border-red-500", "shake");
   } else {
-    field.classList.add("border-red-500", "shake")
+    field?.classList.add("border-red-500", "shake")
   }
 }

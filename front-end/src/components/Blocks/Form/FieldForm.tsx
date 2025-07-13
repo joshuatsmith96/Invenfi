@@ -1,10 +1,12 @@
 import Field from "./Field";
 import { styleField } from "../../../utils/StyleUtil";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export type InputField = {
   id: string;
   label: string;
-  type: "password" | "text";
+  type?: "password" | "user" | "custom";
+  customIcon?: IconProp;
   placeholder: string;
   required: boolean;
 }[];
@@ -66,6 +68,7 @@ const FieldForm = ({ inputParams, sendInfo, containerRef }: InputParamsType) => 
           label={field.label}
           type={field.type}
           placeholder={field.placeholder}
+          customIcon={field.customIcon}
           onChange={(e) => {
             onChangeHandler(e, field.required, field.id);
           }}

@@ -1,10 +1,11 @@
 import type { InputField } from "../Blocks/Form/FieldForm"
+import { faGamepad } from "@fortawesome/free-solid-svg-icons"
 
 export const FormFieldSpec: InputField = [
     {
       id: "login-username",
       label: "Username",
-      type: "text",
+      type: "user",
       placeholder: "Enter your username",
       required: true
     },
@@ -12,6 +13,14 @@ export const FormFieldSpec: InputField = [
       id: "login-password",
       label: "Password",
       type: "password",
+      placeholder: "Enter your password",
+      required: true
+    },
+    {
+      id: "test-1",
+      label: "Password",
+      type: 'custom',
+      customIcon: faGamepad,
       placeholder: "Enter your password",
       required: true
     }
