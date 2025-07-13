@@ -10,6 +10,19 @@
     animation: float 6s ease-in-out infinite, breathe 4s ease-in-out infinite, blob-move 10s ease-in-out infinite;
 }
 
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
 @keyframes float {
     0%   { transform: translate(0px, 0px); }
     20%  { transform: translate(6px, -4px); }

@@ -1,0 +1,82 @@
+import Field from "./Field";
+import { styleField } from "../../../utils/StyleUtil";
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
+
+export type InputField = {
+  id: string;
+  label: string;
+  type?: "password" | "user" | "custom";
+  customIcon?: IconProp;
+  placeholder: string;
+  required: boolean;
+}[];
+
+type FieldValue = {
+  input: HTMLInputElement;
+  valid: boolean;
+  value: string;
+};
+
+export type ValuesMap = {
+  [key: string]: FieldValue;
+};
+
+type InputParamsType = {
+  inputParams: InputField;
+  sendInfo: (data: ValuesMap) => void;
+  containerRef?: React.Ref<HTMLDivElement>; // new optional prop
+};
+
+const FieldForm = ({ inputParams, sendInfo, containerRef }: InputParamsType) => {
+  const values: ValuesMap = {};
+
+  const validate = (
+    input: HTMLInputElement,
+    value: string,
+    required: boolean,
+    id: string
+  ) => {
+    const inputContainer = input.parentNode as HTMLElement;
+
+    if (value.length === 0 && required) {
+      values[id] = { input: input, valid: false, value: value };
+      styleField(inputContainer, false);
+    } else {
+      values[id] = { input: input, valid: true, value: value };
+      styleField(inputContainer, true);
+    }
+
+    sendInfo(values);
+  };
+
+  const onChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    required: boolean,
+    id: string
+  ) => {
+    const element = e.target;
+    const value = e.target.value;
+    validate(element, value, required, id);
+  };
+
+  return (
+    <div ref={containerRef} className="w-full"> {/* attach the ref here */}
+      {inputParams.map((field) => (
+        <Field
+          key={field.id}
+          id={field.id}
+          label={field.label}
+          type={field.type}
+          placeholder={field.placeholder}
+          customIcon={field.customIcon}
+          onChange={(e) => {
+            onChangeHandler(e, field.required, field.id);
+          }}
+          required={field.required}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default FieldForm;
