@@ -26,12 +26,19 @@ const LoginContainer = () => {
     arrayOfInputs.map((input, count) => {
       const valid = fieldData[input.id] != undefined ? fieldData[input.id].valid : false;
       const field = allFields ? allFields[count].children[1] : undefined;
-      if (fieldData[input.id] && valid) {
+      const isRequired = FormFieldSpec.find(item => item.id === input.id)?.required;
+      console.log("IS THIS REQUIRED?", isRequired)
+
+      if(!isRequired){
+        validArray.push(true)
+      } else {
+        if (fieldData[input.id] && valid) {
         validArray.push(true);
         styleField(field, true);
       } else {
         validArray.push(false)
         styleField(field, false);
+      }
       }
     });
 

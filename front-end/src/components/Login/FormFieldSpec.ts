@@ -18,10 +18,10 @@ export const FormFieldSpec: InputField = [
     },
     {
       id: "test-1",
-      label: "Password",
+      label: "Secret Hint",
       type: 'custom',
       customIcon: faGamepad,
-      placeholder: "Enter your password",
-      required: true
+      placeholder: "Enter a secret hint",
+      required: false
     }
 ]
