@@ -5,6 +5,7 @@ import { FormFieldSpec } from "./FormFieldSpec.ts";
 import { useRef } from "react";
 import { styleField } from "../../utils/StyleUtil.ts";
 import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
+import { callAPI } from "../../utils/callAPI.ts";
 
 const LoginContainer = () => {
   let fieldData: ValuesMap = {};
@@ -27,7 +28,7 @@ const LoginContainer = () => {
     arrayOfInputs.map((input, count) => {
       const valid = fieldData[input.id] != undefined ? fieldData[input.id].valid : false;
       const field = allFields ? allFields[count].children[1] : undefined;
-      const isRequired = FormFieldSpec.find((item:InputField) => item.id === input.id)?.required;
+      const isRequired = FormFieldSpec.find((item: InputField) => item.id === input.id)?.required;
       console.log("IS THIS REQUIRED?", isRequired);
 
       if (!isRequired) {
@@ -55,9 +56,25 @@ const LoginContainer = () => {
     }
   };
 
-  const sendData = () => {
-    console.log("Data is acceptable.");
-    console.log("Acceptable Data", fieldData);
+  const sendData = async () => {
+    console.log("FIELD DATA", fieldData);
+    const dataToSend = {
+      username: fieldData["login-username"].value,
+      password: fieldData["login-password"].value,
+    };
+    try {
+      const response = await callAPI.login(dataToSend);
+      console.log("Login success:", response);
+      alert("Login successful!");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Login failed:", error.message);
+        alert(`Login failed: ${error.message}`);
+      } else {
+        console.error("Login failed with unknown error:", error);
+        alert("Login failed: Unknown error");
+      }
+    }
   };
 
   return (
