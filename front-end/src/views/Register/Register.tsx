@@ -1,9 +1,9 @@
 import { forwardRef } from "react";
 import { FormFieldSpec } from "./FormFieldSpec";
-import type { ValuesMap } from "../Blocks/Form/FieldForm";
+import type { InputField, ValuesMap } from "../../components/Blocks/Form/FieldForm";
 import { useRef } from "react";
-import FieldForm from "../Blocks/Form/FieldForm";
-import TransparentContainer from "../Blocks/TransparentContainer/TransparentContainer";
+import FieldForm from "../../components/Blocks/Form/FieldForm";
+import TransparentContainer from "../../components/Blocks/TransparentContainer/TransparentContainer";
 import { styleField } from "../../utils/StyleUtil";
 
 const Register = forwardRef<HTMLDivElement>((_, ref) => {
@@ -37,7 +37,7 @@ const Register = forwardRef<HTMLDivElement>((_, ref) => {
       console.log(input)
       const valid = fieldData[input.id] != undefined ? fieldData[input.id].valid : false;
       const field = allFields ? allFields[count].children[1] : undefined;
-      const isRequired = FormFieldSpec.find((item) => item.id === input.id)?.required;
+      const isRequired = FormFieldSpec.find((item: InputField) => item.id === input.id)?.required;
       console.log("IS THIS REQUIRED?", isRequired);
 
       if (!isRequired) {

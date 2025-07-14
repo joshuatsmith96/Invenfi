@@ -1,8 +1,8 @@
 import '../animations.css'
 import BackgroundBlobs from '../components/BackgroundBlobs'
-import LoginContainer from '../components/Login/LoginContainer'
-import RegisterSection from '../components/Login/RegisterSection'
-import Register from '../components/Register/Register'
+import LoginContainer from '../views/Login/LoginContainer'
+import RegisterSection from '../views/Login/RegisterSection'
+import Register from '../views/Register/Register'
 import { useRef } from 'react'
 
 const Login = () => {

@@ -71,9 +71,9 @@
 
 
 import { faBuilding, faFolder, faMailBulk, faPerson } from "@fortawesome/free-solid-svg-icons"
-import type { InputField } from "../Blocks/Form/FieldForm"
+import type { InputFieldArray } from "../../components/Blocks/Form/FieldForm"
 
-export const FormFieldSpec: InputField = [
+export const FormFieldSpec: InputFieldArray = [
     {
       id: "registration-company-name",
       label: "Company Name",

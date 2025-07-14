@@ -10,7 +10,9 @@ export type InputField = {
   customIcon?: IconProp;
   placeholder: string;
   required: boolean;
-}[];
+};
+
+export type InputFieldArray = InputField[];
 
 type FieldValue = {
   input: HTMLInputElement | HTMLSelectElement;
@@ -24,7 +26,7 @@ export type ValuesMap = {
 
 type InputParamsType = {
   formSize: number,
-  inputParams: InputField;
+  inputParams: InputFieldArray;
   sendInfo: (data: ValuesMap) => void;
   containerRef?: React.Ref<HTMLDivElement>; // new optional prop
 };

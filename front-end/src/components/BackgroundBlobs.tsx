@@ -1,5 +1,5 @@
 import Blob from "./Blob";
-import { blobSettings1, blobSettings2, blobSettings3, blobSettings4 } from "./Login/BlobSpec";
+import { blobSettings1, blobSettings2, blobSettings3, blobSettings4 } from '../views/Login/BlobSpec';
 
 const BackgroundBlobs = () => {
   
