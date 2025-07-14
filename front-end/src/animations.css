@@ -46,6 +46,31 @@
   }
 }
 
+/* animation.css */
+.fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #5D49EE;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
 
 @keyframes shake {
   0% {

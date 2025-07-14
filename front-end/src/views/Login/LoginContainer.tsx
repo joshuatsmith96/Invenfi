@@ -1,9 +1,9 @@
 import FieldForm from "../../components/Blocks/Form/FieldForm.tsx";
 import LoginButton from "./LoginButton";
 import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import type { ValuesMap } from "../../components/Blocks/Form/FieldForm.tsx";
 import { FormFieldSpec } from "./FormFieldSpec.ts";
-import { useRef } from "react";
 import { styleField } from "../../utils/StyleUtil.ts";
 import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
 import { callAPI } from "../../utils/callAPI.ts";
@@ -13,14 +13,16 @@ type LoginContainerProps = {
 };
 
 const LoginContainer = ({ onLogin }: LoginContainerProps) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [animateOut, setAnimateOut] = useState(false);
   const navigate = useNavigate();
   let fieldData: ValuesMap = {};
+  const formRef = useRef<HTMLDivElement>(null);
 
   const retrieveFormData = (data: ValuesMap) => {
     fieldData = data;
   };
-
-  const formRef = useRef<HTMLDivElement>(null);
 
   const isValid = () => {
     const allFields = formRef.current?.children;
@@ -52,13 +54,14 @@ const LoginContainer = ({ onLogin }: LoginContainerProps) => {
     return !validArray.includes(false);
   };
 
-  const submitLoginCredentials = () => {
-    if (isValid()) {
-      console.log("ENTIRE FORM IS VALID");
+  const submitLoginCredentials = async () => {
+    if (!isValid()) return;
+
+    setAnimateOut(true);
+    setLoading(true);
+    setTimeout(() => {
       sendData();
-    } else {
-      console.log("ENTIRE FORM IS NOT VALID");
-    }
+    }, 2000);
   };
 
   const sendData = async () => {
@@ -68,25 +71,44 @@ const LoginContainer = ({ onLogin }: LoginContainerProps) => {
     };
 
     try {
-      const response = await callAPI.login(dataToSend);
-      console.log("Login success:", response);
-      alert("Login successful!");
-      onLogin(); // update App's state
+      await callAPI.login(dataToSend);
+      onLogin();
       navigate("/", { replace: true });
     } catch (error: unknown) {
+      setLoading(false);
+      setAnimateOut(false);
       if (error instanceof Error) {
-        console.error("Login failed:", error.message);
-        alert(`Login failed: ${error.message}`);
+        setError(error.message);
       } else {
-        console.error("Login failed:", error);
-        alert("Login failed: Unknown error");
+        setError("Unknown error occurred.");
       }
     }
   };
 
+  if (loading) {
+    return (
+      <div className="fade-in text-center">
+        <div className="loader mx-auto mb-4"></div>
+        <p>Logging in...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-[#ffffffc2] p-10 z-2 rounded-2xl flex flex-col items-center shadow-md w-[450px] max-[480px]:w-[350px]">
+    <div
+      className={`bg-[#ffffffc2] p-10 z-2 rounded-2xl flex flex-col items-center shadow-md w-[450px] max-[480px]:w-[350px] transition-opacity duration-500 ${
+        animateOut ? "opacity-0" : "opacity-100"
+      }`}
+    >
       <h1 className="font-medium text-3xl mb-5">Login</h1>
+      {error && (
+        <div className="mb-4 text-red-600">
+          <p>{error}</p>
+          <button onClick={() => setError(null)} className="underline text-sm mt-2">
+            Try Again
+          </button>
+        </div>
+      )}
       <FieldForm
         formSize={1}
         containerRef={formRef}
