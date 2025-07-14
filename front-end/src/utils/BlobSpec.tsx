@@ -1,4 +1,4 @@
-import type { BlobStyles } from "../../components/Blob"
+import type { BlobStyles } from "../components/Blob"
 
 export const blobSettings1:BlobStyles = {
     desktop: {
@@ -14,8 +14,8 @@ export const blobSettings1:BlobStyles = {
         left: "-200px"
     },
     phone: {
-        width: "0px",
-        height: "0px",
+        width: "450px",
+        height: "450px",
         bottom: "-200px",
         left: "-200px"
     }
@@ -35,10 +35,10 @@ export const blobSettings1:BlobStyles = {
         right: "-150px"
     },
     phone: {
-        width: "0px",
-        height: "0px",
-        top: "-150px",
-        right: "-150px"
+        width: "265px",
+        height: "265px",
+        top: "-100px",
+        right: "-100px"
     }
   }
 
@@ -56,10 +56,10 @@ export const blobSettings1:BlobStyles = {
         right: "200px"
     },
     phone: {
-        width: "0px",
-        height: "0px",
-        bottom: "250px",
-        right: "200px"
+        width: "200px",
+        height: "200px",
+        bottom: "400px",
+        right: "50px"
     }
   }
 
@@ -77,9 +77,9 @@ export const blobSettings1:BlobStyles = {
         right: "50%"
     },
     phone: {
-        width: "0px",
-        height: "0px",
-        top: "50px",
-        right: "50%"
+        width: "75px",
+        height: "75px",
+        top: "150px",
+        left: "75px"
     }
   }
