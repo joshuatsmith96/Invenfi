@@ -93,7 +93,7 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
         sendInfo={retrieveFormData}
       />
 
-      <div className="flex flex-row w-full gap-10">
+      <div className="flex flex-row w-full gap-10 max-md:gap-2">
         <Button
           onClick={registerUser}
           bgColor="bg-gradient-to-r from-[#5E6AEE] to-[#CF8EEB]"
@@ -102,7 +102,7 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
         </Button>
 
         <Button onClick={goToLogin} color="#434343" thin>
-          Already have an account? Login
+          Go to Login
         </Button>
       </div>
     </TransparentContainer>
