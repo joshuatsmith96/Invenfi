@@ -5,14 +5,15 @@ import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 export type InputField = {
   id: string;
   label: string;
-  type?: "password" | "user" | "custom";
+  type?: "password" | "user" | "custom" | "dropdown";
+  options?: {value: string, label: string}[],
   customIcon?: IconProp;
   placeholder: string;
   required: boolean;
 }[];
 
 type FieldValue = {
-  input: HTMLInputElement;
+  input: HTMLInputElement | HTMLSelectElement;
   valid: boolean;
   value: string;
 };
@@ -32,7 +33,7 @@ const FieldForm = ({ formSize, inputParams, sendInfo, containerRef }: InputParam
   const values: ValuesMap = {};
 
   const validate = (
-    input: HTMLInputElement,
+    input: HTMLInputElement | HTMLSelectElement,
     value: string,
     required: boolean,
     id: string
@@ -51,7 +52,7 @@ const FieldForm = ({ formSize, inputParams, sendInfo, containerRef }: InputParam
   };
 
   const onChangeHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
     required: boolean,
     id: string
   ) => {
@@ -70,6 +71,7 @@ const FieldForm = ({ formSize, inputParams, sendInfo, containerRef }: InputParam
           type={field.type}
           placeholder={field.placeholder}
           customIcon={field.customIcon}
+          options={field.options}
           onChange={(e) => {
             onChangeHandler(e, field.required, field.id);
           }}
