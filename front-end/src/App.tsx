@@ -1,15 +1,20 @@
-//Dependencies & Components
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-//Pages
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-// import Register from './pages/Register'
 import IsAuth from "./components/IsAuth";
+import { useState } from "react";
 
 const App = () => {
-  const loggedIn = false;
+  const [loggedIn, setLoggedIn] = useState(false);  // Manage login state here
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
 
   return (
     <div className="overflow-hidden">
@@ -18,14 +23,23 @@ const App = () => {
           path="/"
           element={
             <IsAuth isLoggedIn={loggedIn}>
-              <Dashboard />
+              <Dashboard onLogout={handleLogout} />
             </IsAuth>
           }
         />
-        <Route path="/login" element={loggedIn ? <Navigate to="/" replace /> : <Login />} />
+        <Route
+          path="/login"
+          element={loggedIn ? (
+            <Navigate to="/" replace />
+          ) : (
+            <Login onLogin={handleLogin} />
+          )}
+        />
         <Route
           path="*"
-          element={loggedIn ? <Navigate to="/" replace /> : <Navigate to="/login" replace />}
+          element={
+            loggedIn ? <Navigate to="/" replace /> : <Navigate to="/login" replace />
+          }
         />
       </Routes>
     </div>

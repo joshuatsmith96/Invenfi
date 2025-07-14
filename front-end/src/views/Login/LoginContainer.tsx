@@ -1,12 +1,19 @@
 import FieldForm from "../../components/Blocks/Form/FieldForm.tsx";
 import LoginButton from "./LoginButton";
+import { useNavigate } from "react-router-dom";
 import type { ValuesMap } from "../../components/Blocks/Form/FieldForm.tsx";
 import { FormFieldSpec } from "./FormFieldSpec.ts";
 import { useRef } from "react";
 import { styleField } from "../../utils/StyleUtil.ts";
 import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
+import { callAPI } from "../../utils/callAPI.ts";
 
-const LoginContainer = () => {
+type LoginContainerProps = {
+  onLogin: () => void;
+};
+
+const LoginContainer = ({ onLogin }: LoginContainerProps) => {
+  const navigate = useNavigate();
   let fieldData: ValuesMap = {};
 
   const retrieveFormData = (data: ValuesMap) => {
@@ -25,10 +32,9 @@ const LoginContainer = () => {
     const validArray: Array<boolean> = [];
 
     arrayOfInputs.map((input, count) => {
-      const valid = fieldData[input.id] != undefined ? fieldData[input.id].valid : false;
+      const valid = fieldData[input.id] !== undefined ? fieldData[input.id].valid : false;
       const field = allFields ? allFields[count].children[1] : undefined;
-      const isRequired = FormFieldSpec.find((item:InputField) => item.id === input.id)?.required;
-      console.log("IS THIS REQUIRED?", isRequired);
+      const isRequired = FormFieldSpec.find((item: InputField) => item.id === input.id)?.required;
 
       if (!isRequired) {
         validArray.push(true);
@@ -43,7 +49,7 @@ const LoginContainer = () => {
       }
     });
 
-    return validArray.includes(false) ? false : true;
+    return !validArray.includes(false);
   };
 
   const submitLoginCredentials = () => {
@@ -55,9 +61,27 @@ const LoginContainer = () => {
     }
   };
 
-  const sendData = () => {
-    console.log("Data is acceptable.");
-    console.log("Acceptable Data", fieldData);
+  const sendData = async () => {
+    const dataToSend = {
+      username: fieldData["login-username"].value,
+      password: fieldData["login-password"].value,
+    };
+
+    try {
+      const response = await callAPI.login(dataToSend);
+      console.log("Login success:", response);
+      alert("Login successful!");
+      onLogin(); // update App's state
+      navigate("/", { replace: true });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error("Login failed:", error.message);
+        alert(`Login failed: ${error.message}`);
+      } else {
+        console.error("Login failed:", error);
+        alert("Login failed: Unknown error");
+      }
+    }
   };
 
   return (
@@ -65,7 +89,7 @@ const LoginContainer = () => {
       <h1 className="font-medium text-3xl mb-5">Login</h1>
       <FieldForm
         formSize={1}
-        containerRef={formRef} // pass the ref here
+        containerRef={formRef}
         inputParams={FormFieldSpec}
         sendInfo={retrieveFormData}
       />

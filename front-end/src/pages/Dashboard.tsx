@@ -1,9 +1,25 @@
-const Dashboard = () => {
-    return(
-        <div>
-            <h1>Dashboard</h1>
-        </div>
-    )
-}
+import { useNavigate } from "react-router-dom";
+import LogoutButton from "../components/LogoutButton";
 
-export default Dashboard
+type DashboardProps = {
+  onLogout: () => void;
+};
+
+const Dashboard = ({ onLogout }: DashboardProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    onLogout();
+    navigate("/login", { replace: true });
+  };
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <LogoutButton onLogout={handleLogout} />
+      {/* rest of dashboard */}
+    </div>
+  );
+};
+
+export default Dashboard;
