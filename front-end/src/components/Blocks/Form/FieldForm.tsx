@@ -64,7 +64,7 @@ const FieldForm = ({ formSize, inputParams, sendInfo, containerRef }: InputParam
   };
 
   return (
-    <div ref={containerRef} className={`w-full ${formSize === 2 ? 'grid grid-cols-2 gap-4 max-md:grid-cols-1' : ''}`}> {/* attach the ref here */}
+    <div ref={containerRef} className={`w-full ${formSize === 2 ? 'grid grid-cols-2 gap-4 max-lg:grid-cols-1' : ''}`}> {/* attach the ref here */}
       {inputParams.map((field) => (
         <Field
           key={field.id}
