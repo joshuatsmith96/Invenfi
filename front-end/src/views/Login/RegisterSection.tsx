@@ -13,6 +13,7 @@ const RegisterSection = ({registerRef}: RegisterSectionType) => {
     const registerForm = registerRef.current;
 
     loginContainer.classList.add("fade-out-left");
+    loginContainer.classList.remove("fade-in-right")
     setTimeout(() => {
       loginContainer.classList.add("hidden");
       registerForm?.classList.remove("hidden");

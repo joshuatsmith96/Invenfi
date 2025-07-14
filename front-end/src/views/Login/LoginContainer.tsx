@@ -1,9 +1,10 @@
-import FieldForm from "../Blocks/Form/FieldForm.tsx";
+import FieldForm from "../../components/Blocks/Form/FieldForm.tsx";
 import LoginButton from "./LoginButton";
-import type { ValuesMap } from "../Blocks/Form/FieldForm.tsx";
+import type { ValuesMap } from "../../components/Blocks/Form/FieldForm.tsx";
 import { FormFieldSpec } from "./FormFieldSpec.ts";
 import { useRef } from "react";
 import { styleField } from "../../utils/StyleUtil.ts";
+import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
 
 const LoginContainer = () => {
   let fieldData: ValuesMap = {};
@@ -26,7 +27,7 @@ const LoginContainer = () => {
     arrayOfInputs.map((input, count) => {
       const valid = fieldData[input.id] != undefined ? fieldData[input.id].valid : false;
       const field = allFields ? allFields[count].children[1] : undefined;
-      const isRequired = FormFieldSpec.find((item) => item.id === input.id)?.required;
+      const isRequired = FormFieldSpec.find((item:InputField) => item.id === input.id)?.required;
       console.log("IS THIS REQUIRED?", isRequired);
 
       if (!isRequired) {
