@@ -20,8 +20,7 @@ export const FormFieldSpec: InputField = [
       id: "test-1",
       label: "Secret Hint",
       type: 'custom',
-      customIcon: faBookAtlas,
       placeholder: "Enter a secret hint",
-      required: false
+      required: true
     }
 ]
