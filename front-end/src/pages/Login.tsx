@@ -6,22 +6,19 @@ import Register from '../views/Register/Register';
 import { useRef } from 'react';
 
 type LoginProps = {
-  onLoginSuccess: () => void;
+  onLogin: () => void;
 };
 
-const Login = ({ onLoginSuccess }: LoginProps) => {
+const Login = ({ onLogin }: LoginProps) => {
   const registerRef = useRef<HTMLDivElement>(null);
   const loginRef = useRef<HTMLDivElement>(null);
-
+  
   return (
     <div className="w-full h-[100vh] flex flex-col justify-center items-center overflow-hidden">
       <BackgroundBlobs />
-      <h1 className="text-4xl z-5 mb-10 font-bold max-[480px]:text-3xl">
-        Welcome to <span className="text-[#5D49EE]">Invenfi</span>
-      </h1>
-      <div className="z-5 flex flex-col gap-5" ref={loginRef}>
-        {/* Pass down the onLoginSuccess callback */}
-        <LoginContainer onLoginSuccess={onLoginSuccess} />
+      <h1 className='text-4xl z-5 mb-10 font-bold max-[480px]:text-3xl'>Welcome to <span className='text-[#5D49EE]'>Invenfi</span></h1>
+      <div className='z-5 flex flex-col gap-5' ref={loginRef}>
+        <LoginContainer onLogin={onLogin} />
         <RegisterSection registerRef={registerRef} />
       </div>
       <Register ref={registerRef} loginRef={loginRef} />

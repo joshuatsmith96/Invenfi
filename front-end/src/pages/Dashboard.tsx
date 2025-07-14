@@ -1,25 +1,23 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LogoutButton from "../components/LogoutButton";
 
-const Dashboard = () => {
-  const [loggedIn, setLoggedIn] = useState(true);
+type DashboardProps = {
+  onLogout: () => void;
+};
+
+const Dashboard = ({ onLogout }: DashboardProps) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    setLoggedIn(false);
-    // Redirect to login page after logout
+    onLogout();
     navigate("/login", { replace: true });
   };
-
-  if (!loggedIn) {
-    return null;
-  }
 
   return (
     <div>
       <h1>Dashboard</h1>
       <LogoutButton onLogout={handleLogout} />
+      {/* rest of dashboard */}
     </div>
   );
 };
