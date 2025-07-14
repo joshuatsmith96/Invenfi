@@ -7,7 +7,11 @@ import { styleField } from "../../utils/StyleUtil.ts";
 import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
 import { callAPI } from "../../utils/callAPI.ts";
 
-const LoginContainer = () => {
+type LoginContainerProps = {
+  onLoginSuccess: () => void;
+};
+
+const LoginContainer = ({ onLoginSuccess }: LoginContainerProps) => {
   let fieldData: ValuesMap = {};
 
   const retrieveFormData = (data: ValuesMap) => {
@@ -66,6 +70,7 @@ const LoginContainer = () => {
       const response = await callAPI.login(dataToSend);
       console.log("Login success:", response);
       alert("Login successful!");
+      onLoginSuccess();  // <-- Notify parent about login success
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Login failed:", error.message);

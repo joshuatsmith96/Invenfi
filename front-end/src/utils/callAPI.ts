@@ -45,6 +45,7 @@ async function login(data: LoginData): Promise<{ message: string; user: User }> 
   const res = await fetch(`${API_BASE}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'include', // <=== IMPORTANT: send cookies with request
     body: JSON.stringify(data),
   });
 
@@ -67,8 +68,38 @@ async function getUsers(): Promise<User[]> {
   return res.json();
 }
 
+// NEW: fetch current logged in user (requires cookie)
+async function getMe(): Promise<{ user: User }> {
+  const res = await fetch(`${API_BASE}/me`, {
+    method: 'GET',
+    credentials: 'include', // <=== send cookie
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Not authenticated');
+  }
+
+  return res.json();
+}
+
+// NEW: logout user (clears cookie)
+async function logout(): Promise<void> {
+  const res = await fetch(`${API_BASE}/logout`, {
+    method: 'POST',
+    credentials: 'include', // <=== send cookie
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Logout failed');
+  }
+}
+
 export const callAPI = {
   register,
   login,
   getUsers,
+  getMe,
+  logout,
 };
