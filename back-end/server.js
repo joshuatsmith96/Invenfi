@@ -4,14 +4,15 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+require('dotenv').config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
 
-const JWT_SECRET = "your_jwt_secret_here"; // Change to env var in prod
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: process.env.ORIGIN,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 }));
@@ -20,14 +21,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "invenfi",
-  password: "newpassword",
-  port: 5432,
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
 });
 
-// Middleware to authenticate JWT from cookie
 function authenticateToken(req, res, next) {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ error: "Not authenticated" });
@@ -114,7 +114,7 @@ app.get("/me", authenticateToken, (req, res) => {
 app.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: false, // true if using HTTPS
+    secure: process.eng.SECURE, // true if using HTTPS
     sameSite: 'lax',
   });
   res.status(200).json({ message: 'Logged out successfully' });
