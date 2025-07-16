@@ -15,7 +15,7 @@ interface LoginData {
   password: string;
 }
 
-interface User {
+export interface User {
   id: number;
   company_name: string;
   company_type?: string;

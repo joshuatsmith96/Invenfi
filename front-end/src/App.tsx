@@ -3,10 +3,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import IsAuth from "./components/IsAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { callAPI } from "./utils/callAPI";
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(false);  // Manage login state here
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const handleLogout = () => {
     setLoggedIn(false);
@@ -15,6 +16,20 @@ const App = () => {
   const handleLogin = () => {
     setLoggedIn(true);
   };
+
+  const check = async () => {
+    try{
+      await callAPI.getMe()
+      setLoggedIn(true)
+    } catch (error: unknown) {
+      console.log(error)
+      setLoggedIn(false)
+    }
+  }
+
+  useEffect(() => {
+    check()
+  })
 
   return (
     <div className="overflow-hidden">
