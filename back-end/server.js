@@ -114,7 +114,7 @@ app.get("/me", authenticateToken, (req, res) => {
 app.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: process.eng.SECURE, // true if using HTTPS
+    secure: process.env.SECURE, // true if using HTTPS
     sameSite: 'lax',
   });
   res.status(200).json({ message: 'Logged out successfully' });
