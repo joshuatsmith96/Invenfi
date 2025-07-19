@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef, useRef, useState } from "react";
 import type { RefObject, ForwardedRef } from "react";
 
 import { FormFieldSpec } from "./FormFieldSpec";
@@ -20,6 +20,7 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
 ) {
   const fieldDataRef = useRef<ValuesMap>({});
   const formRef = useRef<HTMLDivElement>(null);
+  const [registrationComplete, setRegistrationComplete] = useState(false);
 
   const retrieveFormData = (data: ValuesMap) => {
     fieldDataRef.current = data;
@@ -34,7 +35,6 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
 
     if (!valid) {
       console.log("ENTIRE FORM IS NOT VALID");
-      console.log(fieldDataRef.current);
       return;
     }
 
@@ -49,12 +49,10 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
       password: data["registration-verify-password"].value,
     };
 
-    console.log("DATA TO SEND", dataToSend);
-
     try {
       const response = await callAPI.register(dataToSend);
       console.log("Registration success:", response);
-      alert("Registration successful!");
+      setRegistrationComplete(true);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error("Registration failed:", error.message);
@@ -83,28 +81,44 @@ const Register = forwardRef<HTMLDivElement, RegisterProps>(function Register(
   };
 
   return (
-    <TransparentContainer ref={ref} formSize={2}>
-      <h1 className="font-medium text-3xl mb-5">Register</h1>
+    <TransparentContainer ref={ref} formSize={2} className="overflow-x-scroll h-[65vh]">
+      {!registrationComplete ? (
+        <>
+          <h1 className="font-medium text-3xl mb-5">Register</h1>
 
-      <FieldForm
-        formSize={2}
-        containerRef={formRef}
-        inputParams={FormFieldSpec}
-        sendInfo={retrieveFormData}
-      />
+          <FieldForm
+            formSize={2}
+            containerRef={formRef}
+            inputParams={FormFieldSpec}
+            sendInfo={retrieveFormData}
+          />
 
-      <div className="flex flex-row w-full gap-10 max-md:gap-2">
-        <Button
-          onClick={registerUser}
-          bgColor="bg-gradient-to-r from-[#5E6AEE] to-[#CF8EEB]"
-        >
-          Sign Up
-        </Button>
+          <div className="flex flex-row w-full gap-10 max-md:gap-2">
+            <Button
+              onClick={registerUser}
+              bgColor="bg-gradient-to-r from-[#5E6AEE] to-[#CF8EEB]"
+            >
+              Sign Up
+            </Button>
 
-        <Button onClick={goToLogin} color="#434343" thin>
-          Go to Login
-        </Button>
-      </div>
+            <Button onClick={goToLogin} color="#434343" thin>
+              Go to Login
+            </Button>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col items-center justify-center h-full text-center">
+          <h2 className="text-3xl font-semibold text-green-600 mb-6">
+            Registration Complete!
+          </h2>
+          <p className="text-lg mb-8 text-gray-700">
+            You can now log in with your new account.
+          </p>
+          <Button onClick={goToLogin} bgColor="bg-gradient-to-r from-[#5E6AEE] to-[#CF8EEB]">
+            Go to Login
+          </Button>
+        </div>
+      )}
     </TransparentContainer>
   );
 });
