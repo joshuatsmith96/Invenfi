@@ -8,24 +8,26 @@ export type MenuLinkProps = {
   icon: IconDefinition;
   linkTitle: string;
   ref?: Ref<HTMLAnchorElement>;
+  isCollapsed: boolean;
 };
 
-const DesktopMenuLink = ({ to, icon, linkTitle, ref }: MenuLinkProps) => {
+const DesktopMenuLink = ({ to, icon, linkTitle, ref, isCollapsed }: MenuLinkProps) => {
   return (
     <NavLink
       to={to}
       ref={ref}
       className={({ isActive }) =>
-        `w-full flex flex-row items-center p-3 text-xl rounded-md transition-colors gap-2 ${
-          isActive ? "bg-[#EEFBFF] text-black" : "inactive-link text-gray-600"
-        }`
+        `
+        w-full px-4 py-2 mb-2 rounded transition-all flex items-center
+        ${isCollapsed ? "flex-col justify-center gap-1" : "flex-row gap-3"}
+        ${isActive ? "bg-[#EEFBFF] text-black" : "text-gray-600 hover:bg-gray-100"}
+        `
       }
     >
-      <FontAwesomeIcon icon={icon} />
-      <p>{linkTitle}</p>
+      <FontAwesomeIcon icon={icon} className="text-lg" />
+      {!isCollapsed && <p className="whitespace-nowrap">{linkTitle}</p>}
     </NavLink>
   );
 };
-
 
 export default DesktopMenuLink;
