@@ -1,5 +1,5 @@
 import '../animations.css';
-import BackgroundBlobs from '../components/BackgroundBlobs';
+import BackgroundBlobs from '../components/Blocks/Blob/BackgroundBlobs';
 import LoginContainer from '../views/Login/LoginContainer';
 import RegisterSection from '../views/Login/RegisterSection';
 import Register from '../views/Register/Register';
