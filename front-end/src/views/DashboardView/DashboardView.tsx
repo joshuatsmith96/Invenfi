@@ -1,6 +1,15 @@
 import Container from "../../components/Container";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const DashboardView = () => {
+  const dummy_data = [
+    { name: "Clothing", value: 400 },
+    { name: "Furniture", value: 300 },
+    { name: "Food", value: 300 }
+  ];
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+
   return (
     <div className="flex flex-col gap-15">
       <h1 className="font-bold text-2xl">Dashboard</h1>
@@ -20,12 +29,30 @@ const DashboardView = () => {
           </Container>
         </div>
         <div className="flex flex-row gap-10">
-            <Container className="w-[50%]">
-                <h1 className="text-lg font-[500]">Top Products By Category</h1>
-            </Container>
-            <Container className="w-[50%]">
-                <h1 className="text-lg font-[500]">Transaction Log</h1>
-            </Container>
+          <Container className="w-[50%]">
+            <h1 className="text-lg font-[500] mb-5">Top Products By Category</h1>
+            <div>
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={dummy_data}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    dataKey="value"
+                    label={({ name }) => name}
+                  >
+                    {dummy_data.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </Container>
+          <Container className="w-[50%]">
+            <h1 className="text-lg font-[500]">Transaction Log</h1>
+          </Container>
         </div>
       </div>
     </div>
