@@ -1,4 +1,4 @@
-import type { BlobStyles } from "../components/Blob"
+import type { BlobStyles } from "../components/Blocks/Blob/Blob"
 
 export const blobSettings1:BlobStyles = {
     desktop: {

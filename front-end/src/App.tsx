@@ -1,9 +1,12 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import { useEffect, useState } from "react";
 import { callAPI } from "./utils/callAPI";
+
+//Views
+import DashboardView from "./views/DashboardView/DashboardView";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -45,14 +48,16 @@ const App = () => {
     <div className="overflow-hidden">
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
+        <Route path="/" element={<Dashboard onLogout={handleLogout}><DashboardView /></Dashboard>} />
+        <Route path="/inventory" element={<Dashboard onLogout={handleLogout}><h1>Inventory View</h1></Dashboard>} />
+        <Route path="/reports" element={<Dashboard onLogout={handleLogout}><h1>Reports View</h1></Dashboard>} />
         <Route
           path="*"
           element={
             loggedIn ? (
-              <Dashboard onLogout={handleLogout} />
+              <Navigate to={'/'} replace />
             ) : (
-              <Login onLogin={handleLogin} />
+              <Navigate to={'/login'} replace />
             )
           }
         />

@@ -56,7 +56,7 @@ const Field = ({
           <input
             id={id}
             type={inputType}
-            className="outline-none pl-2 w-full"
+            className="outline-none pl-2 w-full p-2 ml-2"
             placeholder={placeholder}
             onChange={(e) => onChange?.(e, required)}
           />

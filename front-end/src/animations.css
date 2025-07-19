@@ -1,3 +1,7 @@
+.transition{
+  transition: .4s
+}
+
 .blob {
   transition: .5s;
 }

@@ -1,24 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import LogoutButton from "../components/LogoutButton";
-import { callAPI } from "../utils/callAPI";
+import type { ReactNode } from "react";
+import DashboardMenu from "../components/Menu/Desktop/DashboardMenu";
 
 type DashboardProps = {
   onLogout: () => void;
+  children: ReactNode;
 };
 
-const Dashboard = ({ onLogout }: DashboardProps) => {
-  const navigate = useNavigate();
-
-  const handleLogout = () => {
-    callAPI.logout()
-    onLogout();
-    navigate("/login", { replace: true });
-  };
-
+const Dashboard = ({ onLogout, children }: DashboardProps) => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <LogoutButton onLogout={handleLogout} />
+    <div className="relative bg-[#f5f5f5] flex flex-row">
+      <DashboardMenu onLogout={onLogout} />
+      <div className="dashboard-view-box w-full p-10 px-20">{children}</div>
     </div>
   );
 };
