@@ -7,12 +7,14 @@ import { FormFieldSpec } from "./FormFieldSpec.ts";
 import { styleField } from "../../utils/StyleUtil.ts";
 import type { InputField } from "../../components/Blocks/Form/FieldForm.tsx";
 import { callAPI } from "../../utils/callAPI.ts";
+import type { RefObject } from "react";
 
 type LoginContainerProps = {
   onLogin: () => void;
+  regSectionRef: RefObject<HTMLDivElement | null>
 };
 
-const LoginContainer = ({ onLogin }: LoginContainerProps) => {
+const LoginContainer = ({ onLogin, regSectionRef }: LoginContainerProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [animateOut, setAnimateOut] = useState(false);
@@ -55,6 +57,8 @@ const LoginContainer = ({ onLogin }: LoginContainerProps) => {
   };
 
   const submitLoginCredentials = async () => {
+      console.log(regSectionRef)
+
     if (!isValid()) return;
 
     setAnimateOut(true);
