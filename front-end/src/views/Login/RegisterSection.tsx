@@ -22,7 +22,7 @@ const RegisterSection = ({registerRef}: RegisterSectionType) => {
   };
 
   return (
-    <div className="bg-[#ffffffc2] p-5 z-2 rounded-2xl flex flex-col items-center shadow-md w-full">
+    <div className="bg-[#ffffffc2] p-5 z-2 rounded-2xl flex flex-col items-center shadow-md w-full" ref={registerRef}>
       <p>
         Don't have an account?{" "}
         <span className="text-[#3C7DF5] hover:cursor-pointer" onClick={goToRegistration}>

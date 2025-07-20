@@ -1,5 +1,6 @@
 import Container from "../../components/Container";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import TransactionTable from "../../components/Blocks/TransactionTable";
 
 const DashboardView = () => {
   const dummy_data = [
@@ -52,6 +53,7 @@ const DashboardView = () => {
           </Container>
           <Container className="w-[50%]">
             <h1 className="text-lg font-[500]">Transaction Log</h1>
+            <TransactionTable />
           </Container>
         </div>
       </div>
