@@ -20,7 +20,7 @@ const Login = ({ onLogin }: LoginProps) => {
       <h1 className='text-4xl z-5 mb-10 font-bold max-[480px]:text-3xl'>Welcome to <span className='text-[#5D49EE]'>Invenfi</span></h1>
       <div className='z-5 flex flex-col gap-5' ref={loginRef}>
         <LoginContainer onLogin={onLogin} regSectionRef={regSectionRef}/>
-        <RegisterSection registerRef={registerRef} />
+        <RegisterSection registerRef={registerRef} regSectRef={regSectionRef}/>
       </div>
       <Register ref={registerRef} loginRef={loginRef} />
     </div>
