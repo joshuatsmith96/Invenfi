@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import type { Ref } from "react";
-import ToolTip, { type ToolTipType } from "../../ToolTip";
+import ToolTip from "../../ToolTip";
 
 export type MenuLinkProps = {
   to: string;
@@ -10,12 +10,11 @@ export type MenuLinkProps = {
   linkTitle: string;
   ref?: Ref<HTMLAnchorElement>;
   isCollapsed?: boolean;
-  toolTipData?: ToolTipType;
 };
 
-const DesktopMenuLink = ({ to, icon, linkTitle, ref, isCollapsed, toolTipData }: MenuLinkProps) => {
+const DesktopMenuLink = ({ to, icon, linkTitle, ref, isCollapsed }: MenuLinkProps) => {
   return (
-    <ToolTip text={linkTitle} customPosition={toolTipData ? toolTipData.customPosition : ""}>
+    <ToolTip>
       <NavLink
         to={to}
         ref={ref}

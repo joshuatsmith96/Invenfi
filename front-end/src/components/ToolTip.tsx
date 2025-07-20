@@ -1,39 +1,26 @@
-import { useState, type ReactNode } from "react";
-import useScreenWidth from "../utils/ScreenSize";
-import { mobileSize } from "../utils/universalExports";
+import { useState, type ReactNode } from "react"
 
-export type ToolTipType = {
-  text?: string;
-  children?: ReactNode;
-  customPosition?: string;
-};
+type ToolTipType = {
+  children: ReactNode
+}
 
-const ToolTip = ({ text, children, customPosition }: ToolTipType) => {
-  const [showToolTip, setShowToolTip] = useState(false);
-  const screenSize = useScreenWidth();
+const ToolTip = ({children}: ToolTipType) => {
+  const [showMessage, setShowMessage] = useState(false)
 
-  const onHover = (direction: string) => {
-    if (screenSize <= mobileSize) {
-      if (direction === "on") {
-        setShowToolTip(true);
-      } else if (direction === "out") {
-        setShowToolTip(false);
-      }
+  const onHover = (action: string) => {
+    if(action === "on") {
+      setShowMessage(true)
+    } else if (action === "off"){
+      setShowMessage(false)
     }
-  };
+  }
 
-  return (
-    <div onMouseOver={() => onHover("on")} onMouseOut={() => onHover("out")}>
+  return(
+    <span className="relative" onMouseOver={() => onHover("on")} onMouseOut={() => onHover("off")}>
+      <span className={`text-white absolute bg-gray-500 delay-200 duration-150 p-2 rounded-md right-[-150px] ${showMessage ? 'opacity-75' : 'opacity-0'}`}>Tool Tip Message</span>
       {children}
-      <span
-        className={`absolute right-[${customPosition}] bg-gray-400 text-white p-2 duration-150 delay-150 rounded-md ${
-          showToolTip ? "opacity-75" : "opacity-0"
-        }`}
-      >
-        {text}
-      </span>
-    </div>
-  );
-};
+    </span>
+  )
+}
 
-export default ToolTip;
+export default ToolTip

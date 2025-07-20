@@ -5,25 +5,16 @@ export const MenuLinks: MenuLinkProps[] = [
     {
         to: "/",
         icon: faSitemap,
-        linkTitle: "Dashboard",
-        toolTipData: {
-            customPosition: "-90px"
-        }
+        linkTitle: "Dashboard"
     },
     {
         to: "/inventory",
         icon: faBox,
-        linkTitle: "Inventory",
-        toolTipData: {
-            customPosition: "-100px"
-        }
+        linkTitle: "Inventory"
     },
     {
         to: "/reports",
         icon: faChartArea,
-        linkTitle: "Reports",
-        toolTipData: {
-            customPosition: "-100px"
-        }
+        linkTitle: "Reports"
     }
 ]

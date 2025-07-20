@@ -85,7 +85,7 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
           {!isCollapsed && <span>Invenfi</span>}
         </h2>
 
-        <div className="my-10 flex flex-col overflow-hidden">
+        <div className={`my-10 flex flex-col ${isCollapsed ? "" : "overflow-hidden"}`}>
           {!isCollapsed && <h2 className="text-xl font-bold mb-10">Menu</h2>}
           <div className="flex flex-col">
             {MenuLinks.map((link) => (
@@ -95,14 +95,13 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
                 icon={link.icon}
                 linkTitle={link.linkTitle}
                 isCollapsed={isCollapsed}
-                toolTipData={link.toolTipData}
               />
             ))}
           </div>
         </div>
       </div>
 
-      <ToolTip text="Testing 123">
+      <ToolTip>
         <LogoutButton onLogout={handleLogout} />
       </ToolTip>
     </div>
