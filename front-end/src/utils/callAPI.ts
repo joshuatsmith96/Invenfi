@@ -69,19 +69,30 @@ async function getUsers(): Promise<User[]> {
 }
 
 // NEW: fetch current logged in user (requires cookie)
-async function getMe(): Promise<{ user: User }> {
+async function getMe(): Promise<{ user: User } | null> {
   const res = await fetch(`${API_BASE}/me`, {
     method: 'GET',
     credentials: 'include', // <=== send cookie
   });
 
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.error || 'Not authenticated');
+  if (res.status === 401 || res.status === 403) {
+    // Token expired or invalid — clear session
+    try {
+      await logout(); // optional: clear server-side cookie
+    } catch (logoutErr) {
+      console.error('Logout cleanup failed:', logoutErr);
+    }
+    return null;
   }
 
-  return res.json();
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Failed to fetch user');
+  }
+
+  return res.json(); // { user: ... }
 }
+
 
 // NEW: logout user (clears cookie)
 async function logout(): Promise<void> {
