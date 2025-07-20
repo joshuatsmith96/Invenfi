@@ -3,9 +3,10 @@ import type { RefObject } from "react";
 
 type RegisterSectionType = {
   registerRef: RefObject<HTMLDivElement | null>
+  regSectRef: RefObject<HTMLDivElement | null>
 }
 
-const RegisterSection = ({registerRef}: RegisterSectionType) => {
+const RegisterSection = ({registerRef, regSectRef}: RegisterSectionType) => {
 
   const goToRegistration = (e: MouseEvent<HTMLSpanElement>) => {
     const eventElement = e.target as Element;
@@ -13,7 +14,7 @@ const RegisterSection = ({registerRef}: RegisterSectionType) => {
     const registerForm = registerRef.current;
 
     loginContainer.classList.add("fade-out-left");
-    loginContainer.classList.remove("fade-in-right")
+    loginContainer.classList.remove("fade-in-right");
     setTimeout(() => {
       loginContainer.classList.add("hidden");
       registerForm?.classList.remove("hidden");
@@ -22,7 +23,7 @@ const RegisterSection = ({registerRef}: RegisterSectionType) => {
   };
 
   return (
-    <div className="bg-[#ffffffc2] p-5 z-2 rounded-2xl flex flex-col items-center shadow-md w-full" ref={registerRef}>
+    <div className="bg-[#ffffffc2] p-5 z-2 rounded-2xl flex flex-col items-center shadow-md w-full" ref={regSectRef}>
       <p>
         Don't have an account?{" "}
         <span className="text-[#3C7DF5] hover:cursor-pointer" onClick={goToRegistration}>
