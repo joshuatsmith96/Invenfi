@@ -1,23 +1,26 @@
 import { useState, type ReactNode } from "react"
 
 type ToolTipType = {
-  children: ReactNode
+  children: ReactNode,
+  message: string
 }
 
-const ToolTip = ({children}: ToolTipType) => {
+const ToolTip = ({ children, message }: ToolTipType) => {
   const [showMessage, setShowMessage] = useState(false)
 
-  const onHover = (action: string) => {
-    if(action === "on") {
-      setShowMessage(true)
-    } else if (action === "off"){
-      setShowMessage(false)
-    }
-  }
-
-  return(
-    <span className="relative" onMouseOver={() => onHover("on")} onMouseOut={() => onHover("off")}>
-      <span className={`text-white absolute bg-gray-500 delay-200 duration-150 p-2 rounded-md right-[-150px] ${showMessage ? 'opacity-75' : 'opacity-0'}`}>Tool Tip Message</span>
+  return (
+    <span
+      className="relative flex items-center"
+      onMouseOver={() => setShowMessage(true)}
+      onMouseOut={() => setShowMessage(false)}
+    >
+      <span
+        className={`absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-500 text-white p-2 rounded-md transition-opacity duration-150 ${
+          showMessage ? 'opacity-75' : 'opacity-0'
+        }`}
+      >
+        {message}
+      </span>
       {children}
     </span>
   )

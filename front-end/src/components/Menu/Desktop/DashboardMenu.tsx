@@ -7,7 +7,6 @@ import { useState } from "react";
 import DesktopMenuLink from "./DesktopMenuLink";
 import { MenuLinks } from "../../../views/DashboardView/LinkSpecs";
 import useScreenWidth from "../../../utils/ScreenSize";
-import ToolTip from "../../ToolTip";
 import { mobileSize } from "../../../utils/universalExports";
 
 type DashboardProps = {
@@ -101,9 +100,7 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
         </div>
       </div>
 
-      <ToolTip>
-        <LogoutButton onLogout={handleLogout} />
-      </ToolTip>
+      <LogoutButton onLogout={handleLogout} />
     </div>
   );
 };
