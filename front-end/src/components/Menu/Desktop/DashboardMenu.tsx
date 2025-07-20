@@ -95,6 +95,7 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
                 icon={link.icon}
                 linkTitle={link.linkTitle}
                 isCollapsed={isCollapsed}
+                toolTipData={link.toolTipData}
               />
             ))}
           </div>
