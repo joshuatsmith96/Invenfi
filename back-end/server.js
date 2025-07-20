@@ -94,8 +94,9 @@ app.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       sameSite: "lax",
-      secure: false, // set to true if HTTPS in production
-      maxAge: 3600000, // 1 hour
+      secure: false,
+      maxAge: 3600000,
+      expires: new Date(Date.now() + 3600000),
     });
 
     res.json({ message: "Login successful", user: payload });
