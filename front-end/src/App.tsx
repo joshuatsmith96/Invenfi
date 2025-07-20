@@ -22,13 +22,17 @@ const App = () => {
 
   const check = async () => {
     try {
-      await callAPI.getMe();
-      setLoggedIn(true);
+      const result = await callAPI.getMe();
+      if (result) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
     } catch (error: unknown) {
       console.log(error);
       setLoggedIn(false);
     } finally {
-      setLoading(false); // <-- only stop loading when check finishes
+      setLoading(false);
     }
   };
 
@@ -48,18 +52,33 @@ const App = () => {
     <div className="overflow-hidden">
       <Routes>
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
-        <Route path="/" element={<Dashboard onLogout={handleLogout}><DashboardView /></Dashboard>} />
-        <Route path="/inventory" element={<Dashboard onLogout={handleLogout}><h1>Inventory View</h1></Dashboard>} />
-        <Route path="/reports" element={<Dashboard onLogout={handleLogout}><h1>Reports View</h1></Dashboard>} />
+        <Route
+          path="/"
+          element={
+            <Dashboard onLogout={handleLogout}>
+              <DashboardView />
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <Dashboard onLogout={handleLogout}>
+              <h1>Inventory View</h1>
+            </Dashboard>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <Dashboard onLogout={handleLogout}>
+              <h1>Reports View</h1>
+            </Dashboard>
+          }
+        />
         <Route
           path="*"
-          element={
-            loggedIn ? (
-              <Navigate to={'/'} replace />
-            ) : (
-              <Navigate to={'/login'} replace />
-            )
-          }
+          element={loggedIn ? <Navigate to={"/"} replace /> : <Navigate to={"/login"} replace />}
         />
       </Routes>
     </div>
