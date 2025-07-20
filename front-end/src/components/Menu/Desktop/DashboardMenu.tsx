@@ -7,7 +7,6 @@ import { useState } from "react";
 import DesktopMenuLink from "./DesktopMenuLink";
 import { MenuLinks } from "../../../views/DashboardView/LinkSpecs";
 import useScreenWidth from "../../../utils/ScreenSize";
-import ToolTip from "../../ToolTip";
 import { mobileSize } from "../../../utils/universalExports";
 
 type DashboardProps = {
@@ -85,7 +84,7 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
           {!isCollapsed && <span>Invenfi</span>}
         </h2>
 
-        <div className="my-10 flex flex-col overflow-hidden">
+        <div className={`my-10 flex flex-col ${isCollapsed ? "" : "overflow-hidden"}`}>
           {!isCollapsed && <h2 className="text-xl font-bold mb-10">Menu</h2>}
           <div className="flex flex-col">
             {MenuLinks.map((link) => (
@@ -95,16 +94,13 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
                 icon={link.icon}
                 linkTitle={link.linkTitle}
                 isCollapsed={isCollapsed}
-                toolTipData={link.toolTipData}
               />
             ))}
           </div>
         </div>
       </div>
 
-      <ToolTip text="Testing 123">
-        <LogoutButton onLogout={handleLogout} />
-      </ToolTip>
+      <LogoutButton onLogout={handleLogout} />
     </div>
   );
 };

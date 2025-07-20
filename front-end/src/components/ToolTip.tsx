@@ -1,39 +1,29 @@
-import { useState, type ReactNode } from "react";
-import useScreenWidth from "../utils/ScreenSize";
-import { mobileSize } from "../utils/universalExports";
+import { useState, type ReactNode } from "react"
 
-export type ToolTipType = {
-  text?: string;
-  children?: ReactNode;
-  customPosition?: string;
-};
+type ToolTipType = {
+  children: ReactNode,
+  message: string
+}
 
-const ToolTip = ({ text, children, customPosition }: ToolTipType) => {
-  const [showToolTip, setShowToolTip] = useState(false);
-  const screenSize = useScreenWidth();
-
-  const onHover = (direction: string) => {
-    if (screenSize <= mobileSize) {
-      if (direction === "on") {
-        setShowToolTip(true);
-      } else if (direction === "out") {
-        setShowToolTip(false);
-      }
-    }
-  };
+const ToolTip = ({ children, message }: ToolTipType) => {
+  const [showMessage, setShowMessage] = useState(false)
 
   return (
-    <div onMouseOver={() => onHover("on")} onMouseOut={() => onHover("out")}>
-      {children}
+    <span
+      className="relative flex items-center"
+      onMouseOver={() => setShowMessage(true)}
+      onMouseOut={() => setShowMessage(false)}
+    >
       <span
-        className={`absolute right-[${customPosition}] bg-gray-400 text-white p-2 duration-150 delay-150 rounded-md ${
-          showToolTip ? "opacity-75" : "opacity-0"
+        className={`absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-500 text-white p-2 rounded-md transition-opacity duration-150 ${
+          showMessage ? 'opacity-75' : 'opacity-0'
         }`}
       >
-        {text}
+        {message}
       </span>
-    </div>
-  );
-};
+      {children}
+    </span>
+  )
+}
 
-export default ToolTip;
+export default ToolTip
