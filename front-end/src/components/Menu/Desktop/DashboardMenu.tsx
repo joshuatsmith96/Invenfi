@@ -1,12 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronCircleLeft, faClipboardCheck } from "@fortawesome/free-solid-svg-icons";
 import LogoutButton from "../../LogoutButton";
-import { UNSAFE_SingleFetchRedirectSymbol, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { callAPI } from "../../../utils/callAPI";
 import { useState } from "react";
 import DesktopMenuLink from "./DesktopMenuLink";
 import { MenuLinks } from "../../../views/DashboardView/LinkSpecs";
 import useScreenWidth from "../../../utils/ScreenSize";
+import ToolTip from "../../ToolTip";
+import { mobileSize } from "../../../utils/universalExports";
 
 type DashboardProps = {
   onLogout: () => void;
@@ -18,7 +20,6 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
   const [mobile, setMobile] = useState(false);
   const navigate = useNavigate();
   const screenWidth = useScreenWidth();
-  const mobileSize = 800
 
   const handleToggleMenu = () => {
     setIsCollapsed((prev) => !prev);
@@ -100,7 +101,9 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
         </div>
       </div>
 
-      <LogoutButton onLogout={handleLogout} />
+      <ToolTip text="Testing 123">
+        <LogoutButton onLogout={handleLogout} />
+      </ToolTip>
     </div>
   );
 };
