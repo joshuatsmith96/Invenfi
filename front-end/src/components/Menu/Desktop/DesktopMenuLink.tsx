@@ -15,7 +15,7 @@ export type MenuLinkProps = {
 
 const DesktopMenuLink = ({ to, icon, linkTitle, ref, isCollapsed, toolTipData }: MenuLinkProps) => {
   return (
-    <ToolTip text={toolTipData ? toolTipData.text : linkTitle}>
+    <ToolTip text={linkTitle} customPosition={toolTipData ? toolTipData.customPosition : ""}>
       <NavLink
         to={to}
         ref={ref}

@@ -3,7 +3,7 @@ import useScreenWidth from "../utils/ScreenSize";
 import { mobileSize } from "../utils/universalExports";
 
 export type ToolTipType = {
-  text: string;
+  text?: string;
   children?: ReactNode;
   customPosition?: string;
 };
@@ -23,15 +23,15 @@ const ToolTip = ({ text, children, customPosition }: ToolTipType) => {
   };
 
   return (
-    <div onMouseOver={() => onHover("on")} onMouseOut={() => onHover("out")} className="relevant">
-      <div
-        className={`absolute ${customPosition ? `right-[-20px]` : "right-[-60px]"} bg-gray-400 text-white p-2 duration-150 delay-150 rounded-md ${
+    <div onMouseOver={() => onHover("on")} onMouseOut={() => onHover("out")}>
+      {children}
+      <span
+        className={`absolute right-[${customPosition}] bg-gray-400 text-white p-2 duration-150 delay-150 rounded-md ${
           showToolTip ? "opacity-75" : "opacity-0"
         }`}
       >
         {text}
-      </div>
-      {children}
+      </span>
     </div>
   );
 };
