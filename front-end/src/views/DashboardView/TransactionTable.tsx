@@ -1,6 +1,6 @@
 // views/DashboardView.tsx or wherever you're using it
 import type { ColumnDef } from "@tanstack/react-table";
-import DataTable from "../DataTable";
+import DataTable from "../../components/DataTable";
 
 type ProductRow = {
   product: string;
