@@ -21,6 +21,7 @@ const App = () => {
   };
 
   const check = async () => {
+    console.log("CHECKING");
     try {
       const result = await callAPI.getMe();
       if (result) {
@@ -38,7 +39,7 @@ const App = () => {
 
   useEffect(() => {
     check();
-  }, []); // <-- empty dependency array so it runs only on mount
+  }, []);
 
   if (loading) {
     return (
@@ -55,9 +56,13 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Dashboard onLogout={handleLogout}>
-              <DashboardView />
-            </Dashboard>
+            loggedIn ? (
+              <Dashboard onLogout={handleLogout}>
+                <DashboardView />
+              </Dashboard>
+            ) : (
+              <Navigate to={"/login"} replace />
+            )
           }
         />
         <Route
