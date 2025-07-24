@@ -66,7 +66,7 @@ const DashboardMenu = ({ onLogout }: DashboardProps) => {
   return (
     <div
       className={`transition-all duration-300 ease-in-out bg-white shadow-xl shadow-[#bbbbbb] h-[100vh] p-5 pt-10
-        flex flex-col justify-between items-start relative
+        flex flex-col justify-between items-start relative max-sm:hidden
         ${isCollapsed ? "!w-[100px]" : "w-[500px]"}`}
     >
       <div className="w-full">

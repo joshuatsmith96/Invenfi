@@ -20,7 +20,7 @@ const DesktopMenuLink = ({ to, icon, linkTitle, ref, isCollapsed }: MenuLinkProp
         ref={ref}
         className={({ isActive }) =>
           `
-        w-full px-4 py-2 mb-2 rounded transition-all flex items-center
+        w-full px-4 py-2 mb-2 rounded transition-all flex items-center max-sm:mb-0
         ${isCollapsed ? "flex-col justify-center gap-1" : "flex-row gap-3"}
         ${isActive ? "bg-[#EEFBFF] text-black" : "text-gray-600 hover:bg-gray-100"}
         `

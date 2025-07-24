@@ -7,7 +7,7 @@ type LogoutButtonProps = {
 
 const LogoutButton = ({ onLogout }: LogoutButtonProps) => {
   return (
-    <button onClick={onLogout} className="text-lg hover:cursor-pointer"><FontAwesomeIcon icon={faRightFromBracket}/> Logout</button>
+    <button onClick={onLogout} className="text-lg hover:cursor-pointer text-red-500"><FontAwesomeIcon icon={faRightFromBracket}/> <span className="max-sm:hidden">Logout</span></button>
   );
 };
 
