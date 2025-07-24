@@ -69,6 +69,50 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// Add new inventory item
+app.post("/inventory", authenticateToken, async (req, res) => {
+  const { name, location, stock } = req.body;
+  const userId = req.user.id;
+
+  if (!name) {
+    return res.status(400).json({ error: "Item name is required" });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO inventory (name, location, stock, user_id)
+       VALUES ($1, $2, $3, $4)
+       RETURNING *`,
+      [name, location || "", stock || 0, userId]
+    );
+
+    res.status(201).json({ message: "Inventory item created", item: result.rows[0] });
+  } catch (err) {
+    console.error("Inventory creation error:", err);
+    res.status(500).json({ error: "Could not create inventory item" });
+  }
+});
+
+
+// Get all inventory items for the logged-in user
+app.get("/inventory", authenticateToken, async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM inventory WHERE user_id = $1 ORDER BY created_at DESC",
+      [userId]
+    );
+
+    res.json({ items: result.rows });
+  } catch (err) {
+    console.error("Fetch inventory error:", err);
+    res.status(500).json({ error: "Could not fetch inventory" });
+  }
+});
+
+
+
 // Login
 app.post("/login", async (req, res) => {
   const { username, password } = req.body;

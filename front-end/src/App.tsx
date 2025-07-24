@@ -5,8 +5,10 @@ import Login from "./pages/Login";
 import { useEffect, useState } from "react";
 import { callAPI } from "./utils/callAPI";
 
+
 //Views
 import DashboardView from "./views/DashboardView/DashboardView";
+import InventoryView from "./views/InventoryView/InventoryView";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -69,7 +71,7 @@ const App = () => {
           path="/inventory"
           element={
             <Dashboard onLogout={handleLogout}>
-              <h1>Inventory View</h1>
+              <InventoryView />
             </Dashboard>
           }
         />

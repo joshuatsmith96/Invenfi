@@ -1,6 +1,7 @@
 import Container from "../../components/Container";
 import TransactionTable from "./TransactionTable";
 import DashboardPieChart from "./DashboardPieChart";
+import ViewPage from "../ViewPage";
 
 const DashboardView = () => {
   const dummy_data = [
@@ -11,8 +12,7 @@ const DashboardView = () => {
 
 
   return (
-    <div className="flex flex-col gap-15">
-      <h1 className="font-bold text-2xl">Dashboard</h1>
+    <ViewPage pageTitle="Dashboard">
       <div className="flex flex-col gap-15">
         <div className="flex flex-row justify-between gap-10 max-xl:flex-col max-xl:gap-5">
           <Container className="w-[30%] max-xl:w-full max-xl:text-center">
@@ -41,7 +41,7 @@ const DashboardView = () => {
           </Container>
         </div>
       </div>
-    </div>
+    </ViewPage>
   );
 };
 
