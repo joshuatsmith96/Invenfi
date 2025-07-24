@@ -11,7 +11,7 @@ const Dashboard = ({ onLogout, children }: DashboardProps) => {
   return (
     <div className="relative bg-[#f5f5f5] flex flex-row h-screen">
       <DashboardMenu onLogout={onLogout} />
-      <MobileDashboardMenu />
+      <MobileDashboardMenu onLogout={onLogout}/>
       <div className="dashboard-view-box w-full p-10 px-20 !overflow-scroll max-xl:p-5">{children}</div>
     </div>
   );

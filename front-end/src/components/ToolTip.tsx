@@ -15,7 +15,7 @@ const ToolTip = ({ children, message }: ToolTipType) => {
       onMouseOut={() => setShowMessage(false)}
     >
       <span
-        className={`absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-500 text-white p-2 rounded-md transition-opacity duration-150 ${
+        className={`absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-500 text-white p-2 rounded-md transition-opacity duration-150 max-sm:hidden ${
           showMessage ? 'opacity-75' : 'opacity-0'
         }`}
       >
