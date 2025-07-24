@@ -28,6 +28,19 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+async function deleteInventoryItemById(id) {
+  try {
+    const result = await pool.query(
+      'DELETE FROM inventory WHERE id = $1 RETURNING id',
+      [id]
+    );
+    return result.rowCount > 0; // true if deleted, false if not found
+  } catch (error) {
+    console.error('DB deletion error:', error);
+    throw error;
+  }
+}
+
 function authenticateToken(req, res, next) {
   const token = req.cookies.token;
   if (!token) return res.status(401).json({ error: "Not authenticated" });
@@ -71,19 +84,58 @@ app.post("/register", async (req, res) => {
 
 // Add new inventory item
 app.post("/inventory", authenticateToken, async (req, res) => {
-  const { name, location, stock } = req.body;
+  const {
+    name,
+    sku,
+    category,
+    brand,
+    description,
+    current_stock,
+    minimum_stock,
+    cost_price,
+    sell_price,
+    status,
+    location,
+    barcode,
+    weight,
+    image_url,
+  } = req.body;
+
   const userId = req.user.id;
 
   if (!name) {
-    return res.status(400).json({ error: "Item name is required" });
+    return res.status(400).json({ error: "Product name is required" });
   }
 
   try {
     const result = await pool.query(
-      `INSERT INTO inventory (name, location, stock, user_id)
-       VALUES ($1, $2, $3, $4)
-       RETURNING *`,
-      [name, location || "", stock || 0, userId]
+      `INSERT INTO inventory (
+        user_id, name, sku, category, brand, description,
+        current_stock, minimum_stock, cost_price, sell_price,
+        status, location, barcode, weight, image_url
+      ) VALUES (
+        $1, $2, $3, $4, $5, $6,
+        $7, $8, $9, $10,
+        $11, $12, $13, $14, $15
+      )
+      RETURNING *`,
+      [
+        userId,
+        name,
+        sku || null,
+        category || null,
+        brand || null,
+        description || null,
+        current_stock || 0,
+        minimum_stock || 0,
+        cost_price || 0,
+        sell_price || 0,
+        status || null,
+        location || null,
+        barcode || null,
+        weight || 0,
+        image_url || null,
+      ]
     );
 
     res.status(201).json({ message: "Inventory item created", item: result.rows[0] });
@@ -92,7 +144,6 @@ app.post("/inventory", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Could not create inventory item" });
   }
 });
-
 
 // Get all inventory items for the logged-in user
 app.get("/inventory", authenticateToken, async (req, res) => {
@@ -111,7 +162,23 @@ app.get("/inventory", authenticateToken, async (req, res) => {
   }
 });
 
+app.delete('/api/inventory/:id', async (req, res) => {
+  const id = req.params.id;
 
+  try {
+    // Replace this with your actual DB deletion logic
+    const deleted = await deleteInventoryItemById(id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.status(200).json({ message: 'Item deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting item:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 // Login
 app.post("/login", async (req, res) => {

@@ -15,6 +15,16 @@ interface LoginData {
   password: string;
 }
 
+export interface InventoryItem {
+  id: number;
+  name: string;
+  location?: string | null;
+  stock: number;
+  user_id: number;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface User {
   id: number;
   company_name: string;
@@ -93,7 +103,6 @@ async function getMe(): Promise<{ user: User } | null> {
   return res.json(); // { user: ... }
 }
 
-
 // NEW: logout user (clears cookie)
 async function logout(): Promise<void> {
   const res = await fetch(`${API_BASE}/logout`, {
@@ -107,10 +116,66 @@ async function logout(): Promise<void> {
   }
 }
 
+// Fetch all inventory items for the logged-in user
+async function getInventory(): Promise<{ items: InventoryItem[] }> {
+  const res = await fetch(`${API_BASE}/inventory`, {
+    method: 'GET',
+    credentials: 'include', // send cookie for auth
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Failed to fetch inventory');
+  }
+
+  return res.json(); // { items: [...] }
+}
+
+// Create a new inventory item
+interface NewInventoryItem {
+  name: string;
+  location?: string;
+  stock?: number;
+}
+
+async function createInventoryItem(data: NewInventoryItem): Promise<{ message: string; item: InventoryItem }> {
+  const res = await fetch(`${API_BASE}/inventory`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Failed to create inventory item');
+  }
+
+  return res.json();
+}
+
+// DELETE inventory item by id
+async function deleteInventoryItem(id: number): Promise<{ message: string }> {
+  const res = await fetch(`${API_BASE}/api/inventory/${id}`, {
+    method: 'DELETE',
+    credentials: 'include', // send cookie for auth
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || 'Failed to delete inventory item');
+  }
+
+  return res.json();
+}
+
 export const callAPI = {
   register,
   login,
   getUsers,
   getMe,
   logout,
+  createInventoryItem,
+  getInventory,
+  deleteInventoryItem,  // added here
 };
